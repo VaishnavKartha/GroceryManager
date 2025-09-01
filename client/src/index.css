@@ -1,1 +1,70 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@theme{
+  --color-primary:#16A34A;
+  --color-accent:#F59E0B;
+  --color-background:#F9FAFB;
+  --color-text-main:#1F2937;
+  --color-text-sec:#6B7280;
+
+}
+
+@layer components{
+  .input-field{
+   
+
+  outline-style: solid;
+  outline-width: 1px;
+  outline-color: rgba(var(--background-rgb, 0,0,0), 0.6); 
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+  height: 2rem;
+}
+.input-field:focus {
+  outline-color:#F59E0B ;
+}
+
+.btn{
+  
+  border:1px solid;
+  border-radius: 0.25rem;
+  padding: 8px 16px;
+}
+
+.btn:hover{
+  cursor:pointer;
+  background-color: #F59E0B;
+  color: white;
+  border: none;
+}
+}
+
+*{
+  box-sizing: border-box;
+  font-family: "Poppins",sans-serif;
+
+}
+
+body{
+  background-color:#F9FAFB ;
+}
+
+
+
+.subtitle::after{
+  content: "|";
+  animation: typewriter 0.7s steps(1) infinite;
+}
+
+@keyframes typewriter{
+  0%,100%{
+    opacity: 0;
+  }
+
+  50%{
+    opacity: 1;
+  }
+}
