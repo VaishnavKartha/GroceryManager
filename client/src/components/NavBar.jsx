@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthUser';
 import {User, UserPen} from 'lucide-react'
 import { useAuth } from '../hooks/useAuth';
 import Modal from './Modal';
+import { useList } from '../hooks/useList';
 const NavBar = () => {
     const navigate=useNavigate();
     const {authUser,setAuthUser}=useContext(AuthContext);
@@ -12,6 +13,18 @@ const NavBar = () => {
     const {logout}=useAuth();
     const [loading,setLoading]=useState(false)
     const [modal,setModal]=useState(false);
+
+    useEffect(()=>{
+        if(modal){
+            document.body.style.overflow="hidden";
+        }
+        else{
+            document.body.style.overflow="auto";
+        }
+
+        return ()=>document.body.style.overflow="auto";
+    },[modal])
+    
 
     const logoutUser=async()=>{
         try{
@@ -24,7 +37,7 @@ const NavBar = () => {
     }
   return (
     <>
-   <nav className='bg-none fixed top-0 w-screen flex justify-between px-8 py-4 items-center'>
+   <nav className='z-50 mb-8 bg-primary border-b bg-none sticky top-0 w-screen flex justify-between px-8 py-4 items-center'>
         
         <Link to="/dash">
             <div>GROCERIO</div>
@@ -51,9 +64,9 @@ const NavBar = () => {
         
    </nav>
 
-    {modal && <Modal/>}
+    {modal && <Modal setModal={setModal}/>}
     
-    {modal && <div onClick={()=>setModal(false)} className='absolute bg-black/30 w-full h-full backdrop-blur-sm'></div>}
+    {modal && <div onClick={()=>setModal(false)} className='z-40 absolute bg-black/30 w-full h-full backdrop-blur-sm'></div>}
    </>
   )
 }

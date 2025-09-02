@@ -8,6 +8,7 @@ import { useContext, useEffect } from "react"
 import { AuthContext } from "./context/AuthUser"
 import Dash from "./pages/Main/Dash"
 import { useAuth } from "./hooks/useAuth"
+import ShoppingList from "./pages/Main/ShoppingList"
 
 function App() {
  
@@ -35,6 +36,7 @@ function App() {
         <Route path="/login" element={!authUser?<Login/>:<Navigate to="/dash"/>}/>
         <Route path="/" element={!authUser?<><NavBar/> <Home/></>:<Navigate to="/dash"/>}/>
         <Route path="/dash" element={authUser?<><NavBar/> <Dash/></>:<Navigate to={"/"}/>}/>
+        <Route path="/dash/:listid" element={authUser?<ShoppingList/>:<Navigate to="/"/>}/>
       </Routes>
      
     </>
