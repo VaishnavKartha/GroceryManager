@@ -6,7 +6,7 @@ import ItemCard from './ItemCard'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useInventory } from '../hooks/useInventory'
-const SearchArea = ({selectedCategory,setSelectedCategory}) => {
+const SearchArea = ({selectedCategory=[],setSelectedCategory=()=>{}}) => {
     const {inventory}=useContext(ListContext);
     const [openFilter,setOpenFilter]=useState(false)
     const {getCategories}=useInventory()
@@ -38,7 +38,7 @@ const SearchArea = ({selectedCategory,setSelectedCategory}) => {
     //console.log(selectedCategory)
   return (
     <>
-        <div className='shadow-md h-full rounded-2xl bg-white/60 backdrop-blur-md' style={{backgroundImage:`linear-gradient(to bottom,rgba(22,163,74,0.6) 5%,rgba(255,255,255,0.8) 20%)`}}>
+        <div className='shadow-md h-full rounded-2xl bg-white/60 backdrop-blur-md' style={{backgroundImage:`linear-gradient(to bottom,rgba(22,163,74,0.6) 50px,rgba(255,255,255,0.8) 20%)`}}>
         <header className='w-full flex flex-col px-2 py-4 items-start'>
             <div  className='w-full flex gap-2 items-center relative'>
                 <input
@@ -47,7 +47,7 @@ const SearchArea = ({selectedCategory,setSelectedCategory}) => {
                 <button className='cursor-pointer' onClick={()=>setOpenFilter(!openFilter)}><ListFilter/></button>
 
 
-                {openFilter && <div className='rounded bg-accent/60 backdrop-blur-md absolute top-full transform translate-y-2 right-0 px-8 py-4'>
+                 <div className={`z-30 rounded-xl bg-accent/60 backdrop-blur-md absolute transform top-full  ${openFilter?"translate-y-2 opacity-100":"-translate-y-4 opacity-0 pointer-events-none"} transition-all duration-200 ease-in-out right-0 px-8 py-4 `}>
                         <h3 className='font-semibold text-[18px]'>Choose By Category</h3>
 
                         {categories?.length>0 && <ul className='pt-8'>
@@ -55,7 +55,7 @@ const SearchArea = ({selectedCategory,setSelectedCategory}) => {
                                 return <li key={cat._id} onClick={()=>{handleClick(cat);setOpenFilter(false)}} className='cursor-pointer mb-2 hover:text-background'>{cat.name}</li>
                             })}
                         </ul>}
-                    </div>}
+                    </div>
                 
                 
 
@@ -68,7 +68,7 @@ const SearchArea = ({selectedCategory,setSelectedCategory}) => {
             </span>
         </header>
 
-        <main className='px-2 py-4  flex flex-wrap   justify-between w-full md:h-[600px] overflow-scroll'>
+        <main className='px-2 py-4 flex w-full max-lg:gap-4 lg:flex-wrap lg:h-[600px] lg:justify-between   overflow-scroll'>
                 {inventory?.length>0 && inventory.map((item,index)=>{
                     return <ItemCard key={item._id} id={item._id} name={item.itemName} cost={item.cost} category={item?.category?.name} image={item.image}/>
                 }) }

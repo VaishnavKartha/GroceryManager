@@ -67,12 +67,12 @@ const ItemCard = ({id,name,cost,category,image}) => {
 
 
   return (
-    <div className='shadow-[-1px_-1px_5px_rgba(0,0,0,0.4)] rounded px-2 py-2 w-[40%] md:w-[40%] lg:w-[30%] mt-4'>
+    <div className='shadow-[-1px_-1px_5px_rgba(0,0,0,0.4)] rounded px-2 py-2  max-sm:min-w-[80%] max-lg:min-w-[40%] lg:min-w-[40%] mt-4 '>
       <div className='h-[150px]'>
         <img src={image || ""} alt={name} className='object-cover object-center'/>
       </div>
 
-      <div className='shadow-[-1px_-1px_5px_rgba(0,0,0,0.4)] p-1 bg-accent/50 backdrop-blur-lg '>
+      <div className='shadow-[-1px_-1px_5px_rgba(0,0,0,0.4)] p-1 bg-accent/50 backdrop-blur-lg w-full   '>
         <h3 className='text-center text-lg font-semibold'>{name}</h3>
         <span className='flex justify-between text-sm'>
             <p>Price</p>

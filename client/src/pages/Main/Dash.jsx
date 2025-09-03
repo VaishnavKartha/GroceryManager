@@ -31,11 +31,11 @@ const Dash = () => {
   return (
     <div className='bg-background w-full min-h-screen'>
 
-      <div className=' mx-4 md:mx-36 lg:mx-44 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center'>
+      {userLists.length>0 ?<div className=' mx-4 md:mx-36 lg:mx-44 flex flex-wrap justify-around gap-4'>
         {userLists?.map((list,index)=>{
           return <ListCard getListDetails={handleClick} key={list._id} id={list._id} name={list.listname} status={list.status} createdAt={list.createdAt} updatedAt={list.updatedAt}/>
         })}
-      </div>
+      </div>:<p className='text-center text-4xl text-gray-500/70'>Start Creating Your Lists</p>}
         
       
     </div>

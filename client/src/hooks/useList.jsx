@@ -32,9 +32,9 @@ export const useList=()=>{
         }
     }
 
-    const createList=async(listname)=>{
+    const createList=async(listData)=>{
         try {
-            const {data}=await axiosInstance.post("/list",{listname});
+            const {data}=await axiosInstance.post("/list",listData);
             if(data.success){
                 toast.success(data.message)
                 await getLists();
@@ -60,16 +60,21 @@ export const useList=()=>{
 
     }
 
-    const getSelectedList=async(listid)=>{
+    const getSelectedList=async(listid,group=false)=>{
          try {
       
 
       // Check if we already have a locally edited draft
-      const localList = JSON.parse(localStorage.getItem("currentList"));
-      if (localList && localList.listid === listid) {
-        setCurrentList(localList);
-        navigate(`/dash/${listid}`);
-        return;
+      if(!group){
+
+          const localList = JSON.parse(localStorage.getItem("currentList"));
+          if (localList && localList.listid === listid ) {
+            setCurrentList(localList);
+            if(!group){
+                navigate(`/dash/${listid}`);
+            }
+            return;
+          }
       }
 
       // Otherwise fetch from API
@@ -80,7 +85,10 @@ export const useList=()=>{
         // Save a draft copy locally
         localStorage.setItem("currentList", JSON.stringify(data.itemsList));
 
-        navigate(`/dash/${listid}`);
+        if(!group){
+            navigate(`/dash/${listid}`);
+        }
+        
       } else {
         toast.error(data.message);
       }
@@ -92,14 +100,35 @@ export const useList=()=>{
     }
   }
 
-  const saveList=async(listdata)=>{
+  const saveList=async(listdata,group=false)=>{
     try {
         const {data}=await axiosInstance.post("/list/savelist",listdata)
         if(data.success){
             localStorage.removeItem("currentList");
             //setCurrentList(data.newList);
-            await getSelectedList(listdata.listid);
+            
+                await getSelectedList(listdata.listid,group);
+            
             toast.success("Updation Successfull")
+        }
+    } catch (error) {
+        toast.error(error.response.data.message)
+    }
+  }
+
+  const deleteList=async(listid)=>{
+    try {
+        console.log(listid)
+        const {data}=await axiosInstance.delete(`/list/${listid}`)
+        if(data.success){
+            await getLists();
+            toast.success(data.message);
+
+            const localList=JSON.parse(localStorage.getItem("currentList"));
+
+            if(localList && localList.listid===listid){
+                localStorage.removeItem("currentList");
+            }
         }
     } catch (error) {
         toast.error(error.response.data.message)
@@ -108,5 +137,5 @@ export const useList=()=>{
 
     
 
-    return {createList,getLists,getSelectedList,localStorageManager,syncLocalStorage,saveList}
+    return {createList,getLists,getSelectedList,localStorageManager,syncLocalStorage,saveList,deleteList}
 }

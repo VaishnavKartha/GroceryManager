@@ -2,20 +2,34 @@ import React, { useState } from 'react'
 import Loader from './Loader'
 import toast from 'react-hot-toast'
 import { useList } from '../hooks/useList'
-const Modal = ({setModal}) => {
-    const [listName,setListName]=useState("")
+import { useGroups } from '../hooks/useGroups'
+const Modal = ({setModal,group=false,selectedGroup}) => {
+    const [listname,setListname]=useState("")
     const [loading,setLoading]=useState(false);
     const {createList}=useList();
+    const {getGroupDetails}=useGroups();
 
     const handleClick=async()=>{
-      if(!listName.trim()){
+      
+
+      if(!listname.trim()){
         return toast.error("List Name is required")
       }
+
 
       else{
         setLoading(true)
         try{
-          await createList(listName);
+          if(!group){
+            await createList({listname});
+          }
+          else{
+            
+              await createList({listname,selectedGroup});
+              await getGroupDetails(selectedGroup);
+            
+            
+          }
         }
         finally{
           setLoading(false);
@@ -38,8 +52,8 @@ const Modal = ({setModal}) => {
             <input 
                 className='w-full input-field'
                 type='text'
-                value={listName}
-                onChange={(e)=>setListName(e.target.value)}
+                value={listname}
+                onChange={(e)=>setListname(e.target.value)}
                 placeholder='eg. Weekend Shooping'/>
         </div>
 

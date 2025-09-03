@@ -9,6 +9,8 @@ import { AuthContext } from "./context/AuthUser"
 import Dash from "./pages/Main/Dash"
 import { useAuth } from "./hooks/useAuth"
 import ShoppingList from "./pages/Main/ShoppingList"
+import GroupShare from "./pages/Main/GroupShare"
+import MenuItems from "./pages/Main/MenuItems"
 
 function App() {
  
@@ -37,6 +39,9 @@ function App() {
         <Route path="/" element={!authUser?<><NavBar/> <Home/></>:<Navigate to="/dash"/>}/>
         <Route path="/dash" element={authUser?<><NavBar/> <Dash/></>:<Navigate to={"/"}/>}/>
         <Route path="/dash/:listid" element={authUser?<ShoppingList/>:<Navigate to="/"/>}/>
+        <Route path="/group/:userid" element={authUser?<GroupShare/>:<Navigate to="/"/>}>
+            <Route path="list/:listid" element={authUser?<MenuItems/>:<Navigate to="/"/>}/>
+        </Route>
       </Routes>
      
     </>
