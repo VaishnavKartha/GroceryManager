@@ -6,11 +6,14 @@ import ItemCard from './ItemCard'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useInventory } from '../hooks/useInventory'
+import SkeletonLoader from './SkeletonLoader'
 const SearchArea = ({selectedCategory=[],setSelectedCategory=()=>{}}) => {
     const {inventory}=useContext(ListContext);
     const [openFilter,setOpenFilter]=useState(false)
-    const {getCategories}=useInventory()
+    const {getCategories,searchString,getFullInventory}=useInventory();
+    const [searchText,setSearchText]=useState("");
     const [categories,setCategories]=useState([]);
+    const [skeletonLoading,setSkeletonLoading]=useState(false);
 
 
     useEffect(()=>{
@@ -20,6 +23,24 @@ const SearchArea = ({selectedCategory=[],setSelectedCategory=()=>{}}) => {
         }
         fetchCategories();
     },[])
+
+    useEffect(()=>{
+        const sendQuery=async()=>{
+            try{
+                setSkeletonLoading(true)
+                if(!searchText.trim()){
+                    await getFullInventory();
+                    return
+                }
+                await searchString(searchText);
+            }finally{
+                setSkeletonLoading(false);
+            }
+           
+        }
+        sendQuery();
+
+    },[searchText])
 
     const handleClick=(cat)=>{
         const tempSelected=[...selectedCategory];
@@ -41,9 +62,15 @@ const SearchArea = ({selectedCategory=[],setSelectedCategory=()=>{}}) => {
         <div className='shadow-md h-full rounded-2xl bg-white/60 backdrop-blur-md' style={{backgroundImage:`linear-gradient(to bottom,rgba(22,163,74,0.6) 50px,rgba(255,255,255,0.8) 20%)`}}>
         <header className='w-full flex flex-col px-2 py-4 items-start'>
             <div  className='w-full flex gap-2 items-center relative'>
+
                 <input
-                className='flex-1 input-field rounded-2xl'
+                className='flex-1 input-field rounded-2xl text-[20px] text-text-main '
+                type='text'
+                value={searchText}
+                onChange={(e)=>setSearchText(e.target.value)}
                 placeholder='Search....'/>
+
+
                 <button className='cursor-pointer' onClick={()=>setOpenFilter(!openFilter)}><ListFilter/></button>
 
 
@@ -68,10 +95,10 @@ const SearchArea = ({selectedCategory=[],setSelectedCategory=()=>{}}) => {
             </span>
         </header>
 
-        <main className='px-2 py-4 flex w-full max-lg:gap-4 lg:flex-wrap lg:h-[600px] lg:justify-between   overflow-scroll'>
-                {inventory?.length>0 && inventory.map((item,index)=>{
+        <main className='px-2 py-4 flex w-full max-lg:gap-4 lg:flex-wrap lg:h-[600px] items-start lg:justify-between overflow-scroll'>
+                {!skeletonLoading? inventory?.length>0 && inventory.map((item,index)=>{
                     return <ItemCard key={item._id} id={item._id} name={item.itemName} cost={item.cost} category={item?.category?.name} image={item.image}/>
-                }) }
+                }) :<SkeletonLoader/>}
         </main>
         </div>
 

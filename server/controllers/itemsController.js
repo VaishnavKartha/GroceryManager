@@ -54,3 +54,24 @@ export const queryString=async(req,res)=>{
         res.status(500).json({error:error.message});
     }
 }
+
+export const searchString=async(req,res)=>{
+    try {
+        const {text}=req.query
+        if(!text.trim())return
+
+        const InventoryItems=await Inventory.find().populate({path:"category",model:"Category",select:"name"})
+        if(InventoryItems){
+            const items=InventoryItems.filter((item)=>item.itemName.toLowerCase().includes(text.toLowerCase()));
+            
+            return res.status(200).json({success:true,items:items.length>0?items:[]});
+            
+
+        }
+        
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({error:error.message});
+    }
+
+}

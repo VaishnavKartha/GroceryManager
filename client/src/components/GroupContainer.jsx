@@ -1,14 +1,17 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import ListCard from './ListCard'
 import { useList } from '../hooks/useList';
 import { ListContext } from '../context/ListManager';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useGroups } from '../hooks/useGroups';
 
-const GroupContainer = ({details}) => {
+const GroupContainer = ({details,selectedGroup,setSelectedGroup}) => {
     const {getSelectedList}=useList();
+    const {leaveGroup,deleteGroup}=useGroups();
     const {currentList}=useContext(ListContext);
     const navigate=useNavigate();
     const {pathname}=useLocation();
+    const [loading,setLoading]=useState(false);
 
     const isNestedRoute=pathname?.includes("/list/");
     console.log(currentList);
@@ -18,6 +21,26 @@ const GroupContainer = ({details}) => {
 
         await getSelectedList(listid,true)
         navigate(`list/${listid}`);
+    }
+
+    const handleLeave=async()=>{
+        try{
+            setLoading(true);
+            await leaveGroup(details?._id)
+            setSelectedGroup(null);
+        }finally{
+            setLoading(false);
+        }
+    }
+
+    const handleDelete=async()=>{
+        try{
+            setLoading(true);
+            await deleteGroup(details?._id)
+            setSelectedGroup(null);
+        }finally{
+            setLoading(false);
+        }
     }
 
   return (
@@ -30,8 +53,8 @@ const GroupContainer = ({details}) => {
             </div>
 
             <div>
-                <button className='btn mr-4'>Leave Group</button>
-                <button className='btn'>Delete Group</button>
+                <button className='btn mr-4' onClick={handleLeave} disabled={loading} >Leave Group</button>
+                <button className='btn border-0 text-background hover:border bg-accent hover:bg-transparent hover:text-text-main' onClick={handleDelete} disabled={loading} >Delete Group</button>
             </div>
             
         </header>

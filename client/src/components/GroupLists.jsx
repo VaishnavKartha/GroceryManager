@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../context/AuthUser';
+import SkeletonLoader from './SkeletonLoader';
 
-const GroupLists = ({selectedGroup,setSelectedGroup}) => {
+const GroupLists = ({selectedGroup,setSelectedGroup,skeletonLoading}) => {
     const {userGroups}=useContext(AuthContext);
     const handleClick=(groupid)=>{
         if (selectedGroup===groupid){
@@ -15,7 +16,7 @@ const GroupLists = ({selectedGroup,setSelectedGroup}) => {
   return (
     <div>
         <h2 className='text-center text-xl font-semibold py-4'>Groups</h2>
-        <ul>
+        {!skeletonLoading?<ul>
             {userGroups?.groupid && userGroups?.groupid?.map((group,index)=>{
                 return <li 
                             key={group._id}
@@ -25,7 +26,7 @@ const GroupLists = ({selectedGroup,setSelectedGroup}) => {
                                 {group.name}
                         </li>
             })}
-        </ul>
+        </ul> : <SkeletonLoader height={50}/>}
       
     </div>
   )

@@ -135,3 +135,48 @@ export const getGroupDetails=async(req,res)=>{
         res.status(500).json({error:error.message});
     }
 }
+
+export const leaveGroup=async(req,res)=>{
+    try {
+        const user=req.user;
+        const {groupid}=req.params;
+        if(!user)return res.status(400).json({success:false,message:"Not Authenticated"});
+
+        const group=await Group.findById(groupid);
+        if(!group)return res.status(400).json({success:false,message:"Group Not Found"});
+
+        if(!group?.users?.includes(user._id))return res.status(400).json({success:false,message:"You are not a member of this group"});
+
+        const updatedGroup=await Group.findByIdAndUpdate(groupid,{$pull:{users:user._id}})
+
+        const updatedUser=await User.findByIdAndUpdate(user._id,{$pull:{groupid}});
+        if(!updatedUser || !updatedGroup)return res.status(400).json({success:false,message:"some error occured"});
+
+        return res.status(200).json({success:true,message:"You Left the Group"});
+
+
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({error:error.message});
+    }
+}
+
+export const deleteGroup=async(req,res)=>{
+    try {
+        const user=req.user;
+        const {groupid}=req.params;
+        if(!user)return res.status(400).json({success:false,message:"Not Authenticated"});
+
+        const group=await Group.findById(groupid);
+        if(!group)return res.status(400).json({success:false,message:"Group Not Found"});
+
+        await Group.findByIdAndDelete(groupid);
+
+        await User.findByIdAndUpdate(user._id,{$pull:{groupid}});
+
+        return res.status(200).json({success:true,message:"Group Deleted"});
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({error:error.message});
+    }
+}

@@ -2,8 +2,10 @@ import toast from 'react-hot-toast'
 import { axiosInstance } from '../utils/axios'
 import { useContext } from 'react'
 import { AuthContext } from '../context/AuthUser'
+import { useAuth } from './useAuth'
 export const useGroups=()=>{
     const {setUsers,selectedUserId,setUserGroups}=useContext(AuthContext);
+    const {getUser}=useAuth();
     const createGroup=async(groupName)=>{
         try {
             const {data}=await axiosInstance.post("/group/create",{groupName});
@@ -66,9 +68,36 @@ export const useGroups=()=>{
         }
     }
 
+    const leaveGroup=async(groupid)=>{
+        try {
+            const {data}=await axiosInstance.put(`/group/${groupid}/leave`);
+            if(data.success){
+                toast.success(data.message)//fetch currentUser Again
+                await getUser();
+                await getGroups();
+            }
+        } catch (error) {
+            toast.error(error.response.data.message)
+        }
+    }
+
+
+    const deleteGroup=async(groupid)=>{
+        try {
+            const {data}=await axiosInstance.delete(`/group/${groupid}`);
+            if(data.success){
+                toast.success(data.message)//fetch currentUser Again
+                await getUser();
+                await getGroups();
+            }
+        } catch (error) {
+            toast.error(error.response.data.message)
+        }
+    }
+
     
 
    
 
-    return {createGroup,getAllUsers,addUsers,getGroups,getGroupDetails}
+    return {createGroup,getAllUsers,addUsers,getGroups,getGroupDetails,leaveGroup,deleteGroup}
 }

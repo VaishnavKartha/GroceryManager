@@ -50,5 +50,21 @@ export const useInventory=()=>{
 
     }
 
-    return {getFullInventory,getCategories,itemsByCategory}
+    const searchString=async(searchText)=>{
+        try {
+            const {data}=await axiosInstance.get("/inventory/search",{
+                params:{
+                    text:searchText
+                }
+            })
+
+            if(data.success){
+                setInventory(data.items)
+            }
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+    }
+
+    return {getFullInventory,getCategories,itemsByCategory,searchString}
 }

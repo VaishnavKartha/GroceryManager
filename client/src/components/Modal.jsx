@@ -26,7 +26,8 @@ const Modal = ({setModal,group=false,selectedGroup}) => {
           else{
             
               await createList({listname,selectedGroup});
-              await getGroupDetails(selectedGroup);
+              const result=await getGroupDetails(selectedGroup);
+              setSelectedGroupDetails(result);
             
             
           }

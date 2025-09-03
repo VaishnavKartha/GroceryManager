@@ -11,6 +11,7 @@ const MenuItems = () => {
     const {getFullInventory,itemsByCategory}=useInventory();
     const [loading,setLoading]=useState(false);
     const {listid}=useParams();
+    const [selectedCategory,setSelectedCategory]=useState([]);
     const {localStorageManager,saveList,getSelectedList}=useList();
     const {currentList}=useContext(ListContext);
     useEffect(()=>{
@@ -28,6 +29,13 @@ const MenuItems = () => {
 
         },[])
 
+    useEffect(()=>{
+        const getByCategory=async()=>{
+          await itemsByCategory(selectedCategory)
+        }
+        getByCategory();
+      },[selectedCategory])
+
     const handleClick=async()=>{
     try{
       setLoading(true)
@@ -43,7 +51,7 @@ const MenuItems = () => {
             <button className='btn' onClick={handleClick} disabled={loading}>{loading?<Loader/>:"Save List"}</button>
         </div>
         <div className='lg:h-[800px] overflow-hidden  w-[500px] lg:w-[80%]'>
-            <SearchArea />
+            <SearchArea selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
         </div>
       <div className=' mb-12 overflow-y-auto lg:w-[80%]'>
         <ListPreview/>
