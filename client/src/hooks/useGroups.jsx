@@ -4,7 +4,7 @@ import { useContext } from 'react'
 import { AuthContext } from '../context/AuthUser'
 import { useAuth } from './useAuth'
 export const useGroups=()=>{
-    const {setUsers,selectedUserId,setUserGroups}=useContext(AuthContext);
+    const {setUsers,setUserGroups}=useContext(AuthContext);
     const {getUser}=useAuth();
     const createGroup=async(groupName)=>{
         try {
@@ -31,7 +31,7 @@ export const useGroups=()=>{
         }
     }
 
-    const addUsers=async(groupid)=>{
+    const addUsers=async(groupid,selectedUserId)=>{
         try {
             const {data}=await axiosInstance.post(`/group/add/${groupid}`,{users:selectedUserId});
             if(data.success){

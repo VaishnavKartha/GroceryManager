@@ -2,14 +2,17 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useGroups } from '../hooks/useGroups';
 import Loader from './Loader';
 import { AuthContext } from '../context/AuthUser';
+import { useNavigate } from 'react-router-dom';
 
 const CreateGroupModal = () => {
     const {createGroup,getAllUsers,addUsers}=useGroups();
     const [groupName,setGroupName]=useState("");
-    const {users,authUser,selectedUserId,setSelectedUserId}=useContext(AuthContext);
+    const {users,authUser}=useContext(AuthContext);
+    const [selectedUserId,setSelectedUserId]=useState([])
     const [loading,setLoading]=useState(false)
     const [step,setStep]=useState(1);
     const [groupDetails,setGroupDetails]=useState({})
+    const navigate=useNavigate()
 
 
     useEffect(()=>{
@@ -59,7 +62,9 @@ const CreateGroupModal = () => {
         try{
             setLoading(true)
             if( groupDetails && groupDetails._id){
-                await addUsers(groupDetails._id)
+                await addUsers(groupDetails._id,selectedUserId)
+                navigate(`/group/${authUser?._id}`);
+                
             }
            
         }

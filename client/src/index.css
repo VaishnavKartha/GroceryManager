@@ -37,6 +37,19 @@
   --color-text-main:#1F2937;
   --color-text-sec:#6B7280;
 
+
+  --animate-slideLeft:slideLeft infinite 100ms linear alternate;
+
+
+  @keyframes slideLeft{
+    from{
+      transform:translateX(0);
+    }
+    to{
+      transform:translateX(3px)
+    }
+  }
+
 }
 
 @layer components{
