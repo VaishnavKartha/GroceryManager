@@ -18,7 +18,7 @@ const ShoppingList = () => {
   const {currentList,setCurrentList}=useContext(ListContext);
   const {localStorageManager,saveList}=useList();
   const [loading,setLoading]=useState(false);
-  const [selectedCategory,setSelectedCategory]=useState([]);
+  const [selectedCategory,setSelectedCategory]=useState("");
   useEffect(()=>{
     const fetchInventory=async()=>{
       await getFullInventory();

@@ -54,6 +54,18 @@ const ListPreview = () => {
         })
     }
 
+    const handleChange=(e,index)=>{
+        const {value,checked}=e.target
+       setCurrentList((prevList)=>{
+                const tempList={...prevList}
+
+                tempList.contents[index].purchased=checked    
+                syncLocalStorage(tempList)
+                return tempList
+            })
+        console.log(value)
+    }
+
 
     
     console.log(currentList);
@@ -82,7 +94,10 @@ const ListPreview = () => {
                 return <div key={content?._id} className=' rounded-2xl w-full grid grid-cols-5 pb-4 border border-gray-500/60 place-items-center '>
 
                     <input
-                    type='checkbox'/>
+                    type='checkbox'
+                    value={content?.purchased}
+                    checked={content?.purchased}
+                    onChange={(e)=>handleChange(e,index)}/>
                     
                     <p>{content?.item?.itemName}</p>
                     <p>{content?.quantity}</p>

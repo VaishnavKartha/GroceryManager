@@ -16,7 +16,7 @@ const ListCard = ({getListDetails=()=>{},id,name,status,createdAt,updatedAt}) =>
 
         <span onClick={(e)=>{e.stopPropagation();deleteList(id)}} className=' absolute right-0 top-0 hover:bg-text-sec/30 px-1 py-0.5'><Trash size={"20px"} stroke='red'/></span>
 
-        <div className={`shadow-[-0.5px_-0.5px_18px] text-text-main bg-accent  w-full h-[100px]  slide-container `}>
+        <div className={`shadow-[-0.5px_-0.5px_18px] backdrop-blur-md text-text-main bg-accent/70  w-full h-[100px]  slide-container `}>
             <h3 className='text-center text-2xl'>{name}</h3>
 
             <div>

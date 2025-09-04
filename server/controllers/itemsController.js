@@ -37,14 +37,12 @@ export const getCategories=async(req,res)=>{
 export const queryString=async(req,res)=>{
     try {
         const {category}=req.query
-        const categoryList=category.split(",");
         console.log(category)
-        console.log(categoryList);
         if(!category || !category.trim()){
-            return res.status(200).json({message:"Nothing to fetch"});
+           return
         }
 
-        const newInventory=await Inventory.find({category:{$in:categoryList}}).populate({path:"category",model:"Category",select:"name"})
+        const newInventory=await Inventory.find({category}).populate({path:"category",model:"Category",select:"name"})
         if(newInventory){
             //console.log(newInventory);
             return res.status(200).json({success:true,newInventory});
