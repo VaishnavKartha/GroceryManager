@@ -32,6 +32,18 @@ export const useInventory=()=>{
         }
     }
 
+    const addNewItem=async(itemData)=>{
+        try {
+            const {data}=await axiosInstance.post("/inventory/add",itemData)
+            if(data.success){
+                await getFullInventory();
+                return toast.success(data.message)
+            }
+        } catch (error) {
+             toast.error(error.response.data.message);
+        }
+    }
+
     const itemsByCategory=async(querydata)=>{
         try {
             const {data}=await axiosInstance.get("/inventory/category",{
@@ -66,5 +78,5 @@ export const useInventory=()=>{
         }
     }
 
-    return {getFullInventory,getCategories,itemsByCategory,searchString}
+    return {getFullInventory,getCategories,addNewItem,itemsByCategory,searchString}
 }

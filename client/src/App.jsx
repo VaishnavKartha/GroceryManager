@@ -12,6 +12,7 @@ import ShoppingList from "./pages/Main/ShoppingList"
 import GroupShare from "./pages/Main/GroupShare"
 import MenuItems from "./pages/Main/MenuItems"
 import AddMembers from "./components/AddMembers"
+import AddItemsPanel from "./components/AddItemsPanel"
 
 function App() {
  
@@ -39,6 +40,7 @@ function App() {
         <Route path="/login" element={!authUser?<Login/>:<Navigate to="/dash"/>}/>
         <Route path="/" element={!authUser?<><NavBar/> <Home/></>:<Navigate to="/dash"/>}/>
         <Route path="/dash" element={authUser?<><NavBar/> <Dash/></>:<Navigate to={"/"}/>}/>
+        <Route path="/addNew" element={authUser?<><AddItemsPanel/></>:<Navigate to={"/"}/>}/>
         <Route path="/dash/:listid" element={authUser?<ShoppingList/>:<Navigate to="/"/>}/>
         <Route path="/group/:userid" element={authUser?<GroupShare/>:<Navigate to="/"/>}>
             <Route path="list/:listid" element={authUser?<MenuItems/>:<Navigate to="/"/>}/>

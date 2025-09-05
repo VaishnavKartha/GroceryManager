@@ -1,6 +1,7 @@
 import express from 'express'
 import { protectRoute } from '../middlewares/protectRoutes.js';
-import { getCategories, getInventory, queryString, searchString } from '../controllers/itemsController.js';
+import { addNewItem, getCategories, getInventory, queryString, searchString } from '../controllers/itemsController.js';
+import { upload } from '../middlewares/multer.js';
 
 const inventoryRouter=express.Router();
 
@@ -9,6 +10,7 @@ inventoryRouter.get("/categories",protectRoute,getCategories)
 inventoryRouter.get("/",protectRoute,getInventory);
 inventoryRouter.get("/category",protectRoute,queryString);
 inventoryRouter.get("/search",protectRoute,searchString);
+inventoryRouter.post("/add",protectRoute,upload.single("image"),addNewItem);
 
 
 

@@ -50,7 +50,7 @@ const MenuItems = () => {
         <div className='flex justify-end'>
             <button className='btn' onClick={handleClick} disabled={loading}>{loading?<Loader/>:"Save List"}</button>
         </div>
-        <div className='lg:h-[800px] overflow-hidden  w-[500px] lg:w-[80%]'>
+        <div className='lg:h-[800px] overflow-hidden w-[250px] sm:w-[500px]  lg:w-[80%]'>
             <SearchArea selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
         </div>
       <div className=' mb-12 overflow-y-auto lg:w-[80%]'>

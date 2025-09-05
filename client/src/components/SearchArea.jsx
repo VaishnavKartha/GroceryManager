@@ -8,8 +8,9 @@ import { useEffect } from 'react'
 import { useInventory } from '../hooks/useInventory'
 import SkeletonLoader from './SkeletonLoader'
 import { useDebounce } from '../hooks/useDebounce'
+import { useNavigate } from 'react-router-dom'
 const SearchArea = ({selectedCategory="",setSelectedCategory=()=>{}}) => {
-
+    const navigate=useNavigate();
     const {inventory}=useContext(ListContext);
     const [openFilter,setOpenFilter]=useState(false)
     const {getCategories,searchString,getFullInventory}=useInventory();
@@ -17,7 +18,6 @@ const SearchArea = ({selectedCategory="",setSelectedCategory=()=>{}}) => {
     const [categories,setCategories]=useState([]);
     const debouncedValue=useDebounce(searchText)
     const [skeletonLoading,setSkeletonLoading]=useState(false);
-    const [openAddPanel,setOpenAddPanel]=useState(false);
 
 
     useEffect(()=>{
@@ -100,7 +100,7 @@ const SearchArea = ({selectedCategory="",setSelectedCategory=()=>{}}) => {
             </div>
             <span className='flex gap-4 items-center pt-2'>
                 <p>Couldn't find what you were looking for ?</p>
-                <button onClick={()=>setOpenAddPanel(true)} className='btn bg-accent hover:bg-accent/90 active:bg-accent/80 border-none text-white'>Add Item</button>    
+                <button onClick={()=>navigate("/addNew")} className='btn bg-accent hover:bg-accent/90 active:bg-accent/80 border-none text-white'>Add Item</button>    
             </span>
         </header>
 
