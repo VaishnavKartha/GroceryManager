@@ -26,7 +26,7 @@ export const useList=()=>{
             try {
                 localStorage.setItem("currentList",JSON.stringify(updatedList));
             } catch (error) {
-                console.log(error.message);
+                toast.error(error.message)
                 
             }
         }
@@ -41,7 +41,7 @@ export const useList=()=>{
             }
             
         } catch (error) {
-            console.log(error.message)
+            toast.error(error.message)
         }
 
     }
@@ -50,12 +50,12 @@ export const useList=()=>{
         try {
             const {data}=await axiosInstance.get("/list");
             if(data.success){
-                console.log(data.lists)
+                
                 setUserLists(data.lists)
             }
             
         } catch (error) {
-            console.log(error.message)
+            toast.error(error.message)
         }
 
     }
@@ -118,7 +118,7 @@ export const useList=()=>{
 
   const deleteList=async(listid)=>{
     try {
-        console.log(listid)
+       
         const {data}=await axiosInstance.delete(`/list/${listid}`)
         if(data.success){
             await getLists();

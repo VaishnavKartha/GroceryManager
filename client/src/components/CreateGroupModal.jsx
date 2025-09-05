@@ -56,7 +56,7 @@ const CreateGroupModal = () => {
 
         setSelectedUserId(tempList)
     }
-    console.log(selectedUserId);
+    
 
     const addUsersToGroup=async()=>{
         try{

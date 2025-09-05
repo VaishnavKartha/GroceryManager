@@ -128,7 +128,7 @@ export const getGroupDetails=async(req,res)=>{
         if(!groupid || !user)return res.status(401).json({message:"Invalid Request"})
         const groupLists=await Group.findById(groupid).populate({path:"list",model:"UserList"})
                                                       .populate({ path: "users", model: "User", select: "username email" });
-        console.log(groupLists)
+        
         return res.status(200).json({success:true,groupLists:groupLists?groupLists:{}});
     } catch (error) {
         console.log(error.message);

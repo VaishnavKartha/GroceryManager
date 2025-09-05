@@ -35,7 +35,7 @@ export const getCategories=async(req,res)=>{
 
 export const addNewItem=async(req,res)=>{
     try {
-        console.log(req.body)
+        
         const {itemName:name,cost,category}=req.body;
         const user=req.user;
 
@@ -61,7 +61,7 @@ export const addNewItem=async(req,res)=>{
 export const queryString=async(req,res)=>{
     try {
         const {category}=req.query
-        console.log(category)
+        
         if(!category || !category.trim()){
            return
         }

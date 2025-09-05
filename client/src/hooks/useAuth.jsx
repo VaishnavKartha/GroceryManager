@@ -17,7 +17,7 @@ export const useAuth=()=>{
     const signUp=async(userData)=>{
         const {data}=await axiosInstance.post("/auth/signup",userData);
         if(data.success){
-            console.log(data.user);
+            
             setAuthUser(data.user)
         }
     }
@@ -26,7 +26,7 @@ export const useAuth=()=>{
         try {
             const {data}=await axiosInstance.post("/auth/login",userData);
             if(data.success){
-                console.log(data.user);
+                
                 toast.success("Logged in successfully");
                 setAuthUser(data.user)
             }

@@ -10,7 +10,7 @@ export const useGroups=()=>{
         try {
             const {data}=await axiosInstance.post("/group/create",{groupName});
             if(data.success){
-                console.log(data.savedGroup);
+                
                 return data.savedGroup;
             }
         } catch (error) {
@@ -35,7 +35,7 @@ export const useGroups=()=>{
         try {
             const {data}=await axiosInstance.post(`/group/add/${groupid}`,{users:selectedUserId});
             if(data.success){
-                console.log(data.group);
+               
                 toast.success("Users Added Successfully");
             }
         } catch (error) {
@@ -48,7 +48,7 @@ export const useGroups=()=>{
         try {
             const {data}=await axiosInstance.get("/group/all");
             if(data.success){
-                console.log(data.userGroups);
+               
                 setUserGroups(data.userGroups)
             }
         } catch (error) {
@@ -60,7 +60,7 @@ export const useGroups=()=>{
         try {
             const {data}=await axiosInstance.get(`group/get/${groupid}`);
             if(data.success){
-                console.log(data.groupLists)
+                
                 return data.groupLists;
             }
         } catch (error) {

@@ -59,7 +59,7 @@ export const getLists=async(req,res)=>{
 export const getSelectedList=async(req,res)=>{
     const {listid}=req.params
     const {_id:userid}=req.user;
-    console.log(listid)
+    
     try {
         let itemsList=await ListItems.findOne({listid}).populate({
             path:"contents.item",
@@ -67,7 +67,7 @@ export const getSelectedList=async(req,res)=>{
             select:"itemName cost image"
         });
 
-        console.log(itemsList);
+        
 
         if(!itemsList){
             itemsList=new ListItems({listid,contents:[]})
@@ -86,7 +86,7 @@ export const getSelectedList=async(req,res)=>{
 export const saveList=async(req,res)=>{
     try {
         const {listid,contents}=req.body;
-        console.log(listid,contents)
+        
         if(!listid){
             return res.status(401).json({success:false,message:"Insufficient Data"});
         }

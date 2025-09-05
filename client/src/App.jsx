@@ -11,7 +11,6 @@ import { useAuth } from "./hooks/useAuth"
 import ShoppingList from "./pages/Main/ShoppingList"
 import GroupShare from "./pages/Main/GroupShare"
 import MenuItems from "./pages/Main/MenuItems"
-import AddMembers from "./components/AddMembers"
 import AddItemsPanel from "./components/AddItemsPanel"
 
 function App() {

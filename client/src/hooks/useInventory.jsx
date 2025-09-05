@@ -11,7 +11,7 @@ export const useInventory=()=>{
         try {
             const {data}=await axiosInstance.get("/inventory")
             if(data.success){
-                console.log(data.wholeInventory);
+                
                 setInventory(data.wholeInventory);
 
             }
@@ -24,7 +24,7 @@ export const useInventory=()=>{
         try {
             const {data}=await axiosInstance.get("/inventory/categories");
             if(data.success){
-                console.log(data.categories)
+               
                 return data.categories
             }
         } catch (error) {

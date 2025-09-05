@@ -37,7 +37,7 @@ const Dash = () => {
 
     }
   }
-  console.log(userLists);
+  
   return (
     <div className='bg-background w-full min-h-screen'>
 

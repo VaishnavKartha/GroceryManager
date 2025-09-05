@@ -17,8 +17,7 @@ const GroupContainer = ({details,selectedGroup,setSelectedGroup}) => {
     const [openDetailsPanel,setOpenDetailsPanel]=useState(false);
     const [openSidebar,setOpenSideBar]=useState(false);
     const isNestedRoute=pathname?.includes("/list/");
-    console.log(currentList);
-    console.log(details)
+
     const handleClick=async(listid)=>{
         if(!listid)return
 

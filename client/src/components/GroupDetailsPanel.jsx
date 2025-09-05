@@ -5,7 +5,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import AddMembers from './AddMembers';
 
 const GroupDetailsPanel = ({open,setOpen=()=>{},details}) => {
-    //console.log(details)
+
     const [slideOut,setSlideOut]=useState(false);
     const [groupDetails, setGroupDetails] = useState(details);
     const {authUser}=useContext(AuthContext);

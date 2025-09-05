@@ -22,15 +22,15 @@ const ListPreview = () => {
 
     
 
-    console.log(currentList);
+    
 
     const totalCost=()=>{
 
         const tempList = currentList?.contents || [];
-        console.log(tempList)
+       
 
         const sum=tempList.reduce((acc,item)=>(acc+(item?.item?.cost * item.quantity)),0)
-        console.log(sum)
+        
         return sum
     }
 
@@ -63,12 +63,12 @@ const ListPreview = () => {
                 syncLocalStorage(tempList)
                 return tempList
             })
-        console.log(value)
+        
     }
 
 
     
-    console.log(currentList);
+   
   return (
     <div className='rounded-2xl border border-gray-500/40 pt-1 pb-4 relative'>
       <section className='mb-8'>
