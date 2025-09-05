@@ -1,4 +1,5 @@
 import express from 'express'
+import path from 'path'
 import cors from 'cors'
 import connectDB from './lib/dbConnect.js';
 import {authRouter} from './routes/authRoutes.js';
@@ -9,6 +10,9 @@ import { seed } from './utils/seed.js';
 import listRouter from './routes/listRoutes.js';
 import groupRouter from './routes/groupRoutes.js';
 const PORT=process.env.PORT;
+const __dirname=path.resolve();
+
+
 App.use(express.json());
 App.use(cookieParser());
 
@@ -23,6 +27,13 @@ App.use("/api/auth",authRouter);
 App.use('/api/inventory',inventoryRouter);
 App.use("/api/list",listRouter);
 App.use("/api/group/",groupRouter);
+
+if(process.env.MODE==="production"){
+    App.use(express.static(path.join(__dirname,"../client/dist")))
+    App.get("*",(req,res)=>{
+        res.sendFile(path.join(__dirname,"../client","dist","index.html"))
+    })
+}
 
 //seed()
 
