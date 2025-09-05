@@ -50,7 +50,7 @@ const NavBar = () => {
    <nav className='z-50  bg-primary bg-none sticky top-0 w-screen flex justify-between px-8 py-4 items-center '>
         
         <Link to="/dash">
-            <div>GROCERIO</div>
+            <div className='text-white font-bold text-2xl'>GROCERIO</div>
         </Link>
 
         <div className=''>
@@ -64,7 +64,6 @@ const NavBar = () => {
                     <span onClick={()=>setShowDropdown(!showDropdown)} className='z-10 cursor-pointer hover:[border-radius:50%] hover:text-white px-1 py-1.5  hover:bg-accent'><User/></span>
 
                     <section className={`absolute right-0 mt-4 shadow-md flex flex-col items-center ${showDropdown?"top-full opacity-100 ":"top-0 opacity-0"} `}>
-                            <button className='btn border-0 w-full'>Edit Profile</button>
                             <button onClick={()=>{setCreateModal(!createModal);setShowDropdown(false)}} className='btn border-0 w-full'>Create Group</button>
                             <button className='btn border-0 w-full' onClick={()=>navigate(`/group/${authUser?._id}`)}>View Groups</button>
                             <button  onClick={logoutUser} className='btn border-0 w-full'>logout</button>
