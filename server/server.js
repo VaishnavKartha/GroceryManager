@@ -1,6 +1,7 @@
 import express from 'express'
 import path from 'path'
 import cors from 'cors'
+import dotenv from "dotenv";
 import connectDB from './lib/dbConnect.js';
 import {authRouter} from './routes/authRoutes.js';
 import cookieParser from 'cookie-parser';
@@ -9,6 +10,9 @@ import { App,server } from './lib/socket.js';
 import { seed } from './utils/seed.js';
 import listRouter from './routes/listRoutes.js';
 import groupRouter from './routes/groupRoutes.js';
+
+dotenv.config();
+
 const PORT=process.env.PORT;
 const __dirname=path.resolve();
 
